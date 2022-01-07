@@ -43,6 +43,24 @@ const searchProducts = async (req, res) => {
     });
 }
 
+const filterProducts = async(req,res) => {
+    con.connect(function (err) {
+        if(err){
+            res.status(505).json({
+                message: 'Internal Server Error'
+            });
+        }
+        con.query("", function(err, result){
+            if(err) throw err;
+            let data = JSON.stringify(result);
+            res.status(200).json({
+                message: 'OK',
+                data: data
+            });
+        });
+    });
+}
+
 
 
 
@@ -50,5 +68,5 @@ const searchProducts = async (req, res) => {
 module.exports = {
     getProductsByCat,
     searchProducts,
-
+    filterProducts,
 }
