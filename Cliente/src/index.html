@@ -83,8 +83,9 @@
           
         </div>
         <hr>
-        <div class="container" id="cart-products">
+        <div class="container" id="container-cart">
           <h5 class="text-white text-center my-3">No hay productos en el carrito</h5>
+          
         </div>
         <hr>
         <div class="container mx-3 text-white">
@@ -94,12 +95,46 @@
           </div>
           
         </div>
-        <div class="container mx-3 my-3">
-          <button class="btn btn-success">Finalizar Compra</button>
+        <div class="container btn-group  text-center mx-4 my-3">
+          <div class="container  btn-group mx-4">
+
+            <button class="btn btn-large btn-success">Finalizar Compra</button>
+          </div>
         </div>
         <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">×</a>
-        
+      
       </div>
+
+
+      <!--Template carrito-->
+      <template id="template-cart">
+        <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img
+                src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
+                alt="Trendy Pants and Shoes"
+                class="img-fluid rounded-start"
+              />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" id="product-name">Pisco Mistral</h5>
+                <h5 id="product-price">$5990</h5>
+                <div class="container">
+                  <span>1</span>
+                  <button class="btn btn-primary btn-rounded"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i></button>
+                </div>
+                <p class="card-text">
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
 
       <div id="main">
         <h1>Productos</h1>

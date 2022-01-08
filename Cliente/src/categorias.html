@@ -82,49 +82,30 @@
           
         </div>
         <hr>
-        <div class="container" id="cart-products">
+        <div class="container" id="container-cart">
           <h5 class="text-white text-center my-3">No hay productos en el carrito</h5>
-          <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img
-                  src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
-                  alt="Trendy Pants and Shoes"
-                  class="img-fluid rounded-start"
-                />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">
-                    This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.
-                  </p>
-                  <p class="card-text">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
         <hr>
         <div class="container mx-3 text-white">
-          <div class="row">
+          <div class="row" id="total-container">
             <div class="col-md-6"> <h5>Total:</h5></div>
-            <div class="col-md-6"><h5>$5000</h5></div>
+            <div class="col-md-6 text-center"><h5>$5000</h5></div>
           </div>
           
         </div>
-        <div class="container mx-3 my-3">
-          <button class="btn btn-success">Finalizar Compra</button>
+        <div class="container btn-group  text-center mx-4 my-3">
+          <div class="container  btn-group mx-4">
+
+            <button class="btn btn-large btn-success">Finalizar Compra</button>
+          </div>
         </div>
         <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">×</a>
       
       </div>
 
-      <div class="container py-5">
-            <h1>Categoría uwu</h1>
+      <div class="container py-5" id="main">
+            <h1 class="text-center">Categoría uwu</h1>
             <div class="container text-center my-3" id="spinner">
               <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -137,53 +118,91 @@
             <!-- Productos -->
             <div class="row" id="container-products">
                 
-                <template id="template-products">
-                  <div class="col-md-12 col-lg-3 mb-3 my-3 mb-lg-0">
-                    <div class="card" data-mdb-ripple-color="dark">
-                      <div class="d-flex justify-content-between p-3">
-                  
-                        <div
-                          class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
-                          style="width: 35px; height: 35px;" id="container-discount"
-                        >
-                          <p class="text-white mb-0 small" id="product-discount"></p>
-                        </div>
-                      </div>
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
-                        class="card-img-top img-fluid"
-                        alt="Laptop"
-                      />
-                      <div class="card-body">
-                        <div class="d-flex justify-content-end">
-                          
-                          <p class="small text-danger"><s></s></p>
-                        </div>
-            
-                        <div class="d-flex justify-content-between mb-3">
-                          <h5 class="mb-0" id="product-name"></h5>
-                          <h5 class="text-dark mb-0" id="product-price"></h5>
-                        </div>
-            
-                        <div class="d-flex justify-content-between mb-2">
-                          
-                          <div class="ms-auto text-warning">
-                            <button href="#" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">
-                              <i class="fas fa-plus fa-1x text-warning"></i>
-                              &nbsp;Añadir al carrito
-                            </button>
-                              
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </template>
+    
             </div>
       </div>
       <script type="text/javascript" src="../app.js"></script>
       <script>
         
       </script>
+
+
+<!--Template carrito-->
+  <template id="template-cart">
+    <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
+            alt="Trendy Pants and Shoes"
+            class="img-fluid rounded-start"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body ">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title" id="product-name">Pisco Mistral</h5>
+              <button href="javascript:void(0)" class="btn btn-floating btn-danger delete"><i class="fas fa-trash-alt text-white"></i></button>
+            </div>
+            <h5 id="product-price">$5990</h5>
+            <div class="container">
+              <span>Cantidad: </span>
+              <span id="product-cantidad">1</span>
+              <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-minus"></i></button>
+              <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-plus"></i></button>
+            </div>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+
+
+  <template id="template-products">
+    <div class="col-md-12 col-lg-3 mb-3 my-3 mb-lg-0">
+      <div class="card" data-mdb-ripple-color="dark">
+        <div class="d-flex justify-content-between p-3">
+    
+          <div
+            class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+            style="width: 35px; height: 35px;" id="container-discount"
+          >
+            <p class="text-white mb-0 small" id="product-discount"></p>
+          </div>
+        </div>
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+          class="card-img-top img-fluid"
+          alt="Laptop"
+        />
+        <div class="card-body">
+          <div class="d-flex justify-content-end">
+            
+            <p class="small text-danger"><s></s></p>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <h5 class="mb-0" id="product-name"></h5>
+            <h5 class="text-dark mb-0" id="product-price"></h5>
+          </div>
+
+          <div class="d-flex justify-content-between mb-2">
+            
+            <div class="ms-auto text-warning">
+              <button href="#" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">
+                <i class="fas fa-plus fa-1x text-warning"></i>
+                &nbsp;Añadir al carrito
+              </button>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
 </body>
 </html>

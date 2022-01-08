@@ -1,13 +1,13 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   let categories = fetchCategories();
- 
+  getCart();
+  drawCart();
+  console.log(cart);
   let products = fetchProductsByCategory();
+  
 
-  products.then(data => {
-   
-   
-  });
+  
 
 
 });
@@ -120,14 +120,71 @@ const setCategories = (data) => {
 }
 
 
+let cart ={}
+
+
+const containerCart = document.querySelector("#container-cart");
+
 const buyBtn = (data) => { 
   const buttons = document.querySelectorAll('.card button');
   buttons.forEach(button => {
     button.addEventListener('click', () =>{
-      
       console.log(button.dataset.id);
+      const producto = data.find(item => item.id == button.dataset.id)
+      producto.cantidad = 1;
+      if(cart.hasOwnProperty(producto.id)){
+        producto.cantidad += cart[producto.id].cantidad;
+      } 
+      cart[producto.id] = { ...producto};
+      
+      console.log(cart)
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      drawCart();
+      
     });
   });
+}
+
+
+const drawCart = () =>{
+  containerCart.innerHTML = "";
+  const template = document.querySelector("#template-cart").content;
+  const fragment = document.createDocumentFragment();
+    Object.values(cart).forEach(product => {
+      console.log(product);
+      template.querySelector("img").setAttribute('src', product.url_image);
+      template.querySelector("#product-name").textContent = product.name;
+      template.querySelector("#product-price").textContent = "$"+product.price;
+      template.querySelector("#product-cantidad").textContent = product.cantidad;
+      const copy = template.cloneNode(true);
+      fragment.appendChild(copy);
+    });
+    containerCart.appendChild(fragment);
+}
+
+const dropProduct = (data) => {
+  const buttons = document.querySelectorAll('.card .delete');
+  buttons.forEach(button => {
+    button.addEventListener('click', () =>{
+      console.log(button.dataset.id);
+      const producto = data.find(item => item.id == button.dataset.id)
+      delete cart[producto.id];
+      cart.splice(producto.id, 1);
+      drawCart();
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+  });
+} 
+
+const getCart = () => {
+  if(localStorage.getItem('cart')){
+    cart = JSON.parse(localStorage.getItem('cart'));
+  }
+
+}
+
+const calculateTotal = () => {
   
 }
 
@@ -144,9 +201,9 @@ const searchProducts = async () =>{
 
 function openCart() {
   document.getElementById("sidebarCart").style.width = "600px";
-  document.getElementById("main").style.marginRight = "-250px";
+  document.getElementById("main").style.marginRight = "250px";
 }
 function closeCart() {
   document.getElementById("sidebarCart").style.width = "0";
-  document.getElementById("main").style.marginRight= "0";
+  document.getElementById("main").style.marginRight= "250px";
 }
