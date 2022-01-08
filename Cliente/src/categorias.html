@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Tienda Online</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Categorías</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="lista-categorias">
+                <template id="template-categories">
+                  <li class="nav-item"> 
+                    <a href="" class='dropdown-item' id="link"></a>
+                  </li>
+                </template>    
+              </ul>
+            </li>
+            
+          </ul>
+          <form class="d-flex input-group w-auto">
+              <input
+                type="search"
+                class="form-control rounded my-3"
+                placeholder="Buscar Producto"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              />
+              <span class="input-group-text border-0" id="search-addon">
+                <button class="btn btn-rounded"  type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                
+              </span>
+            </form>
+          <span class="navbar-text me-3">
+            <ul class="navbar-nav">
+                <li class="nav-item" onclick="openCart()">
+                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i></a>
+                </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sidebar cart -->
+
+    <div id="sidebarCart" class="sidebar">
+        <div class="container">
+          <h1 class="mx-3 text-white">Carrito | 0 Productos</h1>
+          
+        </div>
+        <hr>
+        <div class="container" id="cart-products">
+          <h5 class="text-white text-center my-3">No hay productos en el carrito</h5>
+          <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
+                  alt="Trendy Pants and Shoes"
+                  class="img-fluid rounded-start"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="container mx-3 text-white">
+          <div class="row">
+            <div class="col-md-6"> <h5>Total:</h5></div>
+            <div class="col-md-6"><h5>$5000</h5></div>
+          </div>
+          
+        </div>
+        <div class="container mx-3 my-3">
+          <button class="btn btn-success">Finalizar Compra</button>
+        </div>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">×</a>
+      
+      </div>
+
+      <div class="container py-5">
+            <h1>Categoría uwu</h1>
+            <div class="container text-center my-3" id="spinner">
+              <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <h3>Cargando Listado de productos...</h3>
+            </div>
+            <div class="container my-3" id="productos">
+
+            
+            <!-- Productos -->
+            <div class="row" id="container-products">
+                
+                <template id="template-products">
+                  <div class="col-md-12 col-lg-3 mb-3 my-3 mb-lg-0">
+                    <div class="card" data-mdb-ripple-color="dark">
+                      <div class="d-flex justify-content-between p-3">
+                  
+                        <div
+                          class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+                          style="width: 35px; height: 35px;" id="container-discount"
+                        >
+                          <p class="text-white mb-0 small" id="product-discount"></p>
+                        </div>
+                      </div>
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                        class="card-img-top img-fluid"
+                        alt="Laptop"
+                      />
+                      <div class="card-body">
+                        <div class="d-flex justify-content-end">
+                          
+                          <p class="small text-danger"><s></s></p>
+                        </div>
+            
+                        <div class="d-flex justify-content-between mb-3">
+                          <h5 class="mb-0" id="product-name"></h5>
+                          <h5 class="text-dark mb-0" id="product-price"></h5>
+                        </div>
+            
+                        <div class="d-flex justify-content-between mb-2">
+                          
+                          <div class="ms-auto text-warning">
+                            <button href="#" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">
+                              <i class="fas fa-plus fa-1x text-warning"></i>
+                              &nbsp;Añadir al carrito
+                            </button>
+                              
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+            </div>
+      </div>
+      <script type="text/javascript" src="../app.js"></script>
+      <script>
+        
+      </script>
+</body>
+</html>
