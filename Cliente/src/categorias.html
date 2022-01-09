@@ -47,13 +47,14 @@
             </li>
             
           </ul>
-          <form class="d-flex input-group w-auto">
+          <form class="d-flex input-group w-auto" action="/src/search.html" method="get">
               <input
                 type="search"
                 class="form-control rounded my-3"
                 placeholder="Buscar Producto"
                 aria-label="Search"
                 aria-describedby="search-addon"
+                name="search"
               />
               <span class="input-group-text border-0" id="search-addon">
                 <button class="btn btn-rounded"  type="submit">
@@ -109,33 +110,47 @@
       <!-- Main -->
 
 
-      <div class="container py-5" id="main">
-            <h1 class="text-center" id="titulo-categoria"></h1>
-            <div class="container text-center my-3" id="spinner">
-              <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <h3>Cargando Listado de productos...</h3>
+      <div class="container-fluid py-5 bg-light" id="main">
+          <h1 class="text-center" id="titulo-categoria"></h1>
+          <div class="container text-center my-3" id="spinner">
+            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
-            <div class="container my-3" id="productos">
+            <h3>Cargando Listado de productos...</h3>
+          </div>
+          <div class="container-fluid my-3" id="productos">
             <div class="row">
-              <div class="col-md-3 card">
-                
-                  <h3>Filtros</h3>
-                  
-                
+
+              <!--Filtros -->
+              <div class="col-md-2 ">
+          
+          
               </div>
-              <div class="col-md-9">
+              <div class="col-md-8">
                 <!-- Productos -->
+                <div class="container d-flex justify-content-end">
+                  <div class="form-group">
+                    <label for="" class="form-label">Ordenar por:</label>
+                    <select name="" id="" class="form-select">
+                      <option value="1">Nombre (A-Z)</option>
+                      <option value="2">Nombre (Z-A)</option>
+                      <option value="3">Precio (menor a mayor)</option>
+                      <option value="4">Precio (mayor a menor)</option>
+                      <option value="5">Descuento (menor a mayor)</option>
+                      <option value="6">Descuento (mayor a menor)</option>
+                    </select>
+                      <button class="btn btn-black btn-sm  my-3"> Ordenar</button>
+                  </div>
+                </div>
                 <div class="row" id="container-products">
                     
         
                 </div>
               </div>
             </div>
-            
+          </div>
       </div>
-      <script type="text/javascript" src="../app.js"></script>
+      
       
 
 
@@ -173,6 +188,7 @@
   </template>
 
 
+  <!--Template productos-->
 
   <template id="template-products">
     <div class="col-md-12 col-lg-3 mb-3 my-3 mb-lg-0">
@@ -222,7 +238,19 @@
     <div class="col-md-6"> <h5>Total:</h5></div>
     <div class="col-md-6 text-center"><h5 id="total"></h5></div>
   </template>
-  <!-- MDB -->
+  
+  <!-- Footer -->
+ <footer class="bg-dark text-center ">
+  <div class="container p-4">
+  </div>
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2020 Copyright:
+    <a class="text-white" href="#">Tienda Online</a>
+  </div>
+ 
+
+  <script type="text/javascript" src="../app.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
 </body>
+</footer>
 </html>

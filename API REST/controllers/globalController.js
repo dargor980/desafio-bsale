@@ -49,6 +49,30 @@ const searchProducts = async (req, res) => {
     });
 }
 
+const searchProductsByName = async (req, res) => {
+    let con = mysql.createConnection(dataConnection);
+    await con.connect(function (err) {
+        if (err) {
+            con.destroy();
+            res.status(505).json({
+                message: 'Internal Server Error'
+            });
+        }
+        con.query("SELECT * FROM product WHERE name LIKE " + mysql.escape("%" + req.params.search + "%") + " ORDER BY name DESC", function (err, result) {
+            if (err) {
+                con.destroy();
+                res.status(505).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.status(200).json({
+                message: 'OK',
+                data: result
+            });
+        });
+    });
+}
+
 const filterProducts = async (req, res) => {
 
     let filters = req.body;
@@ -100,4 +124,5 @@ module.exports = {
     searchProducts,
     filterProducts,
     getCategories,
+    searchProductsByName
 }

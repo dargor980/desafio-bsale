@@ -3,12 +3,13 @@ const express = require('express');
 const app = express();
 const router = Router();
 
-const { getProductsByCat, searchProducts, filterProducts, getCategories } = require('../controllers/globalController');
+const { getProductsByCat, searchProducts, searchProductsByName, filterProducts, getCategories } = require('../controllers/globalController');
 
-router.get('/categoria/:id', getProductsByCat);
-router.get('/categoria/:id/buscar/:search', searchProducts);
-router.get('/categoria/:id/filter', filterProducts);
-router.get('/categorias', getCategories);
+router.get('/api/categoria/:id', getProductsByCat);
+router.get('/api/categoria/:id/buscar/:search', searchProducts);
+router.get('/api/categoria/:id/filter', filterProducts);
+router.get('/api/categorias', getCategories);
+router.get('/api/search/:search', searchProductsByName);
 app.use('/', router);
 
 module.exports = app;

@@ -37,17 +37,8 @@
     margin-left: 50px;
 }
 
-.openbtn {
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #111;
-    color: white;
-    //padding: 10px 15px;
-    border: none;
-  }
-  
-.openbtn:hover {
-    background-color: #444;
+.filtros{
+    background-color: rgb(59, 59, 59);
 }
 
 
@@ -55,6 +46,9 @@
     transition: margin-left .5s;
     padding: 16px;
 }
+
+
+
 
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
