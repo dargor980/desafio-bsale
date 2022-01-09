@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
-    <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
+    
     <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
@@ -19,7 +18,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Tienda Online</a>
+        <a class="navbar-brand" href="/index.html">Tienda BSale</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -34,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+              <a class="nav-link active" aria-current="page" href="/index.html">Inicio</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Categorías</a>
@@ -66,7 +65,7 @@
           <span class="navbar-text me-3">
             <ul class="navbar-nav">
                 <li class="nav-item" onclick="openCart()">
-                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i></a>
+                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger badge-cart">5</span></a>
                 </li>
             </ul>
           </span>
@@ -76,9 +75,13 @@
 
     <!-- Sidebar cart -->
 
+    <template id="total-products-template">
+      <h1 class="mx-3 text-white" id="total-products">Carrito | 0 Productos</h1>
+    </template>
     <div id="sidebarCart" class="sidebar">
-        <div class="container">
-          <h1 class="mx-3 text-white">Carrito | 0 Productos</h1>
+        <div class="container" id="container-total-products">
+          
+          
           
         </div>
         <hr>
@@ -88,9 +91,8 @@
         </div>
         <hr>
         <div class="container mx-3 text-white">
-          <div class="row" id="total-container">
-            <div class="col-md-6"> <h5>Total:</h5></div>
-            <div class="col-md-6 text-center"><h5>$5000</h5></div>
+          <div class="row" id="total-cart">
+            
           </div>
           
         </div>
@@ -104,8 +106,11 @@
       
       </div>
 
+      <!-- Main -->
+
+
       <div class="container py-5" id="main">
-            <h1 class="text-center">Categoría uwu</h1>
+            <h1 class="text-center" id="titulo-categoria"></h1>
             <div class="container text-center my-3" id="spinner">
               <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -113,18 +118,25 @@
               <h3>Cargando Listado de productos...</h3>
             </div>
             <div class="container my-3" id="productos">
-
-            
-            <!-- Productos -->
-            <div class="row" id="container-products">
+            <div class="row">
+              <div class="col-md-3 card">
                 
-    
+                  <h3>Filtros</h3>
+                  
+                
+              </div>
+              <div class="col-md-9">
+                <!-- Productos -->
+                <div class="row" id="container-products">
+                    
+        
+                </div>
+              </div>
             </div>
+            
       </div>
       <script type="text/javascript" src="../app.js"></script>
-      <script>
-        
-      </script>
+      
 
 
 <!--Template carrito-->
@@ -148,8 +160,8 @@
             <div class="container">
               <span>Cantidad: </span>
               <span id="product-cantidad">1</span>
-              <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-minus"></i></button>
-              <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-plus"></i></button>
+              <button class="btn btn-primary btn-sm btn-rounded removebtn" ><i class="fas fa-minus"></i></button>
+              <button class="btn btn-primary btn-sm btn-rounded addbtn"><i class="fas fa-plus"></i></button>
             </div>
             <p class="card-text">
               <small class="text-muted">Last updated 3 mins ago</small>
@@ -193,7 +205,7 @@
           <div class="d-flex justify-content-between mb-2">
             
             <div class="ms-auto text-warning">
-              <button href="#" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">
+              <button class="btn btn-dark btn-rounded buy" data-mdb-ripple-color="dark" data-mdb-container="body" data-mdb-toggle="popover" data-mdb-placement="top" data-mdb-content="Producto añadido al carrito!" type="button">
                 <i class="fas fa-plus fa-1x text-warning"></i>
                 &nbsp;Añadir al carrito
               </button>
@@ -204,5 +216,13 @@
       </div>
     </div>
   </template>
+
+
+  <template id="template-total">
+    <div class="col-md-6"> <h5>Total:</h5></div>
+    <div class="col-md-6 text-center"><h5 id="total"></h5></div>
+  </template>
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
 </body>
 </html>

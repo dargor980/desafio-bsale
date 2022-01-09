@@ -12,15 +12,15 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
         <!-- MDB -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="src/css/style.css">
         
-    <title>Tienda Online</title>
+    <title>Tienda BSale</title>
 </head>
 <body>
   <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Tienda Online</a>
+          <a class="navbar-brand" href="/index.html">Tienda BSale</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -35,7 +35,7 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="/index.html">Inicio</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Categorías</a>
@@ -118,13 +118,17 @@
               />
             </div>
             <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title" id="product-name">Pisco Mistral</h5>
+              <div class="card-body ">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title" id="product-name">Pisco Mistral</h5>
+                  <button href="javascript:void(0)" class="btn btn-floating btn-danger delete"><i class="fas fa-trash-alt text-white"></i></button>
+                </div>
                 <h5 id="product-price">$5990</h5>
                 <div class="container">
-                  <span>1</span>
-                  <button class="btn btn-primary btn-rounded"><i class="fas fa-minus"></i></button>
-                  <button class="btn btn-primary btn-rounded"><i class="fas fa-plus"></i></button>
+                  <span>Cantidad: </span>
+                  <span id="product-cantidad">1</span>
+                  <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-plus"></i></button>
                 </div>
                 <p class="card-text">
                   <small class="text-muted">Last updated 3 mins ago</small>

@@ -12,7 +12,6 @@ const getProductsByCat = async (req, res) => {
                 });
 
             }
-            console.log("Connected !");
             con.query("SELECT *FROM product WHERE category = " + mysql.escape(req.params.id) + " ORDER BY name DESC", function (err, result) {
                 if (err) throw err;
                 con.destroy();
