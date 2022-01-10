@@ -42,7 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     if(getPathName() == "/src/search.html"){
-      searchProductsByName();
+      if(getParam("filter")){
+        filterSearch();
+      }else{
+        searchProductsByName();
+      }
       
     }
   });
@@ -153,6 +157,8 @@ const searchProductsByName = async () => {
     .finally(() => {
       const spinner = document.querySelector("#spinner");
       const title = document.querySelector("#titulo-search");
+      const searchFilter = document.querySelector("#search-filter");
+      searchFilter.value = search;
       title.textContent = `Resultados de la búsqueda para: "${search}"`;
       spinner.classList.add("d-none");
       setProductsByCategory(dato);
@@ -224,7 +230,7 @@ const getFilterProducts =  async () =>{
     let categoria = getParam("id");
     let filter = getParam("filter");
     let response = await fetch(`http://127.0.0.1:3000/api/categoria/${categoria}/filter/${filter}`, {
-      method: 'POST',
+      method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -253,9 +259,31 @@ const filterSearch = async () => {
     let dato = [];
     let search = getParam("search");
     let filter = getParam("filter");
-    let response = await fetch(`https://127.0.0.1:3000/api/search`)
-  } catch(erro){
+    let response = await fetch(`http://127.0.0.1:3000/api/search/${search}/filter/${filter}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+
+    })
+    .then(response => response.json())
+    .then(data =>{
+      console.log(data)
+      for (let i of data["data"]){
+        dato.push(i);
+      }
+    })
+    .finally(() => {
+      setProductsByCategory(dato);
+      const searchFilter = document.querySelector("#search-filter");
+      searchFilter.value = search;
+    })
+  } catch(error){
     console.log(error);
+
   }
 }
 
