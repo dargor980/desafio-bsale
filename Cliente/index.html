@@ -1,195 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-        <!-- MDB -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
-        <!-- MDB -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
-        <link rel="stylesheet" href="src/css/style.css">
-    <title>Tienda BSale</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
+  <link rel="stylesheet" href="src/css/style.css">
+  <title>Tienda BSale</title>
 </head>
+
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html">Tienda BSale</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarText"
-          aria-controls="navbarText"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/index.html">Inicio</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">Categorías</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="lista-categorias">
-                <template id="template-categories">
-                  <li class="nav-item"> 
-                    <a href="" class='dropdown-item' id="link"></a>
-                  </li>
-                </template>    
-              </ul>
-            </li>
-            
-          </ul>
-          <form class="d-flex input-group w-auto" action="/src/search.html">
-              <input
-                type="search"
-                class="form-control rounded my-3"
-                placeholder="Buscar Producto"
-                aria-label="Search"
-                aria-describedby="search-addon"
-                name="search"
-              />
-              <span class="input-group-text border-0" id="search-addon">
-                <button class="btn btn-rounded"  type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                
-              </span>
-            </form>
-          <span class="navbar-text me-3">
-            <ul class="navbar-nav">
-                <li class="nav-item" onclick="openCart()">
-                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger badge-cart">0</span></a>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/index.html">Tienda BSale</a>
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/index.html">Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-mdb-toggle="dropdown" aria-expanded="false">Categorías</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="lista-categorias">
+              <template id="template-categories">
+                <li class="nav-item">
+                  <a href="" class='dropdown-item' id="link"></a>
                 </li>
+              </template>
             </ul>
+          </li>
+
+        </ul>
+        <form class="d-flex input-group w-auto" action="/src/search.html">
+          <input type="search" class="form-control rounded my-3" placeholder="Buscar Producto" aria-label="Search"
+            aria-describedby="search-addon" name="search" />
+          <span class="input-group-text border-0" id="search-addon">
+            <button class="btn btn-rounded" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+
           </span>
-        </div>
+        </form>
+        <span class="navbar-text me-3">
+          <ul class="navbar-nav">
+            <li class="nav-item" onclick="openCart()">
+              <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i> <span
+                  class="badge bg-danger badge-cart">0</span></a>
+            </li>
+          </ul>
+        </span>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-       <!-- Sidebar cart -->
+  <!-- Sidebar cart -->
 
-      <template id="total-products-template">
-        <h1 class="mx-3 text-white" id="total-products">Carrito | 0 Productos</h1>
-      </template>
-      <div id="sidebarCart" class="sidebar">
-          <div class="container" id="container-total-products">
-            
-            
-            
-          </div>
-          <hr>
-          <div class="container" id="container-cart">
-            <h5 class="text-white text-center my-3">No hay productos en el carrito</h5>
-            
-          </div>
-          <hr>
-          <div class="container mx-3 text-white">
-            <div class="row" id="total-cart">
-              
-            </div>
-            
-          </div>
-          <div class="container btn-group  text-center mx-4 my-3">
-            <div class="container  btn-group mx-4">
-
-              <button class="btn btn-large btn-success">Finalizar Compra</button>
-            </div>
-          </div>
-          <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">×</a>
-        
-        </div>
+  <template id="total-products-template">
+    <h1 class="mx-3 text-white" id="total-products">Carrito | 0 Productos</h1>
+  </template>
+  <div id="sidebarCart" class="sidebar">
+    <div class="container" id="container-total-products">
 
 
-      <!--Template carrito-->
-    <template id="template-cart">
-      <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img
-              src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
-              alt="Trendy Pants and Shoes"
-              class="img-fluid rounded-start"
-            />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body ">
-              <div class="d-flex justify-content-between align-items-center">
-                <h5 class="card-title" id="product-name">Pisco Mistral</h5>
-                <button href="javascript:void(0)" class="btn btn-floating btn-danger delete"><i class="fas fa-trash-alt text-white"></i></button>
-              </div>
-              <h5 id="product-price">$5990</h5>
-              <div class="container">
-                <span>Cantidad: </span>
-                <span id="product-cantidad">1</span>
-                <button class="btn btn-primary btn-sm btn-rounded removebtn" ><i class="fas fa-minus"></i></button>
-                <button class="btn btn-primary btn-sm btn-rounded addbtn"><i class="fas fa-plus"></i></button>
-              </div>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
-            </div>
-          </div>
-        </div>
+
+    </div>
+    <hr>
+    <div class="container" id="container-cart">
+      <h5 class="text-white text-center my-3">No hay productos en el carrito</h5>
+
+    </div>
+    <hr>
+    <div class="container mx-3 text-white">
+      <div class="row" id="total-cart">
+
       </div>
-    </template>
 
-    <template id="template-total">
-      <div class="col-md-6"> <h5>Total:</h5></div>
-      <div class="col-md-6 text-center"><h5 id="total"></h5></div>
-    </template>
+    </div>
+    <div class="container btn-group  text-center mx-4 my-3">
+      <div class="container  btn-group mx-4">
 
-    <template id="template-categorias">
-      <div class="col-md-6 my-3">
-        <a href="" id="link-categoria">
-          <div class="card bg-dark text-white hover-overlay ripple" data-mdb-ripple-color="light">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/slides/017.webp"
-              class="card-img hover-overlay"
-              alt="Stony Beach"
-              id="img-categoria"
-           />
-            <div class="card-img-overlay hover-overlay">
-              <h3 class="card-title">Card title</h5>
-            </div>
-          </div>
-        </a>
+        <button class="btn btn-large btn-success">Finalizar Compra</button>
       </div>
-    </template>
+    </div>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">×</a>
 
-      <div class="container-fluid" id="main">
-        <h1 class="text-center">Productos</h1>
-        <div class="container">
-          <div class="container text-center my-3" id="spinner">
-            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-              <span class="visually-hidden">Loading...</span>
+  </div>
+
+
+  <!--Template carrito-->
+  <template id="template-cart">
+    <div class="card bg-transparent mb-3 text-white" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp" alt="Trendy Pants and Shoes"
+            class="img-fluid rounded-start" />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body ">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title" id="product-name">Pisco Mistral</h5>
+              <button href="javascript:void(0)" class="btn btn-floating btn-danger delete"><i
+                  class="fas fa-trash-alt text-white"></i></button>
             </div>
-            <h3>Cargando Listado de Categorías...</h3>
-          </div>
-          <div class="container row" id="container-categorias">
-           
+            <h5 id="product-price">$5990</h5>
+            <div class="container">
+              <span>Cantidad: </span>
+              <span id="product-cantidad">1</span>
+              <button class="btn btn-primary btn-sm btn-rounded removebtn"><i class="fas fa-minus"></i></button>
+              <button class="btn btn-primary btn-sm btn-rounded addbtn"><i class="fas fa-plus"></i></button>
+            </div>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
           </div>
         </div>
       </div>
+    </div>
+  </template>
 
-      <!-- Footer -->
-      <footer class="bg-dark text-center ">
-        <div class="container p-4">
+  <template id="template-total">
+    <div class="col-md-6">
+      <h5>Total:</h5>
+    </div>
+    <div class="col-md-6 text-center">
+      <h5 id="total"></h5>
+    </div>
+  </template>
+
+  <template id="template-categorias">
+    <div class="col-md-6 my-3">
+      <a href="" id="link-categoria">
+        <div class="card bg-dark text-white hover-overlay ripple" data-mdb-ripple-color="light">
+          <img src="https://mdbcdn.b-cdn.net/img/new/slides/017.webp" class="card-img hover-overlay" alt="Stony Beach"
+            id="img-categoria" />
+          <div class="card-img-overlay hover-overlay">
+            <h3 class="card-title">Card title</h5>
+          </div>
         </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-          © 2020 Copyright:
-          <a class="text-white" href="#">Tienda Online</a>
+      </a>
+    </div>
+  </template>
+
+  <div class="container-fluid" id="main">
+    <h1 class="text-center">Productos</h1>
+    <div class="container">
+      <div class="container text-center my-3" id="spinner">
+        <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
-      </footer>
-      
-      <script type="text/javascript" src="app.js"></script> 
-    </body>
+        <h3>Cargando Listado de Categorías...</h3>
+      </div>
+      <div class="container row" id="container-categorias">
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-center ">
+    <div class="container p-4">
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2020 Copyright:
+      <a class="text-white" href="#">Tienda Online</a>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
 </html>

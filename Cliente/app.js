@@ -2,6 +2,7 @@ let total = 0;
 let totalProducts = 0;
 const listCategories = [];
 let cart = {}
+const APIURL = "https://apibsale2022.herokuapp.com/api/";
 
 const containerProducts = document.querySelector("#container-products");
 const containerCategorias = document.querySelector("#lista-categorias");
@@ -22,29 +23,29 @@ document.addEventListener("DOMContentLoaded", () => {
     calculateTotal();
     updateTotal();
     dropProduct(cart);
-    if(getPathName() == "/" || getPathName() == "/index.html"){
-        drawCategories();
-        const spinner = document.querySelector("#spinner");
-        spinner.classList.add("d-none");
+    if (getPathName() == "/" || getPathName() == "/index.html") {
+      drawCategories();
+      const spinner = document.querySelector("#spinner");
+      spinner.classList.add("d-none");
     }
-    if(getPathName() == "/src/categorias.html" ){ 
+    if (getPathName() == "/src/categorias.html") {
       let nameCategory = listCategories.find(category => category.id == getParam("id"));
       const tituloCategoria = document.querySelector("#titulo-categoria");
       tituloCategoria.textContent = nameCategory.name;
-      if(getParam("filter")){
+      if (getParam("filter")) {
         getFilterProducts()
-      }else{
-  
+      } else {
+
         fetchProductsByCategory();
       }
     }
-    if(getPathName() == "/src/search.html"){
-      if(getParam("filter")){
+    if (getPathName() == "/src/search.html") {
+      if (getParam("filter")) {
         filterSearch();
-      }else{
+      } else {
         searchProductsByName();
       }
-      
+
     }
   });
 });
@@ -80,7 +81,7 @@ const getPathName = () => {
  */
 const fetchCategories = async () => {
   try {
-    let response = await fetch("http://127.0.0.1:3000/api/categorias", {
+    let response = await fetch(`${APIURL}categorias`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -88,18 +89,18 @@ const fetchCategories = async () => {
       headers: {
         'Content-Type': 'application/json'
       }
-      
+
     })
-    .then(response => response.json())
-    .then(data => {
-      for (let i of data["data"]) {
-        listCategories.push(i);
-      }
-      setCategories(listCategories);
-    })
-    
+      .then(response => response.json())
+      .then(data => {
+        for (let i of data["data"]) {
+          listCategories.push(i);
+        }
+        setCategories(listCategories);
+      })
+
   } catch (error) {
-    
+
     console.log(error);
   }
 }
@@ -116,7 +117,7 @@ const fetchProductsByCategory = async () => {
     const idForm = document.querySelector("#id-cat");
     idForm.value = categoryId;
     let dato = [];
-    let response = await fetch(`http://127.0.0.1:3000/api/categoria/${categoryId}`, {
+    let response = await fetch(`${APIURL}categoria/${categoryId}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -125,19 +126,19 @@ const fetchProductsByCategory = async () => {
         'Content-Type': 'application/json',
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      for (let i of data["data"]) {
-        dato.push(i);
-      }
-      setProductsByCategory(dato);
-      buyBtn(dato);
-    })
-    .finally(() => {
-      const spinner = document.querySelector("#spinner");
-      spinner.classList.add("d-none");
-      
-    });
+      .then(response => response.json())
+      .then(data => {
+        for (let i of data["data"]) {
+          dato.push(i);
+        }
+        setProductsByCategory(dato);
+        buyBtn(dato);
+      })
+      .finally(() => {
+        const spinner = document.querySelector("#spinner");
+        spinner.classList.add("d-none");
+
+      });
   } catch (error) {
     console.log(error);
   }
@@ -152,9 +153,9 @@ const fetchProductsByCategory = async () => {
  */
 const searchProductsByName = async () => {
   try {
-    let search = getParam("search"); 
+    let search = getParam("search");
     let dato = [];
-    let response = await fetch(`http://127.0.0.1:3000/api/search/${search}`, {
+    let response = await fetch(`${APIURL}search/${search}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -164,22 +165,22 @@ const searchProductsByName = async () => {
       }
 
     })
-    .then(response => response.json())
-    .then(data =>{
-      for(let i of data["data"]){
-        dato.push(i);
-      }
-    })
-    .finally(() => {
-      const spinner = document.querySelector("#spinner");
-      const title = document.querySelector("#titulo-search");
-      const searchFilter = document.querySelector("#search-filter");
-      searchFilter.value = search;
-      title.textContent = `Resultados de la búsqueda para: "${search}"`;
-      spinner.classList.add("d-none");
-      setProductsByCategory(dato);
-      buyBtn(dato);
-    });
+      .then(response => response.json())
+      .then(data => {
+        for (let i of data["data"]) {
+          dato.push(i);
+        }
+      })
+      .finally(() => {
+        const spinner = document.querySelector("#spinner");
+        const title = document.querySelector("#titulo-search");
+        const searchFilter = document.querySelector("#search-filter");
+        searchFilter.value = search;
+        title.textContent = `Resultados de la búsqueda para: "${search}"`;
+        spinner.classList.add("d-none");
+        setProductsByCategory(dato);
+        buyBtn(dato);
+      });
   } catch (error) {
     console.log(error);
   }
@@ -194,7 +195,7 @@ const searchProductsByName = async () => {
 const setProductsByCategory = (data) => {
   const template = document.querySelector("#template-products").content;
   const fragment = document.createDocumentFragment();
-  
+
   data.forEach(product => {
     if (product.url_image == "" || product.url_image == null) {
       template.querySelector("img").setAttribute('src', "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg");
@@ -256,12 +257,12 @@ const drawCategories = () => {
  * Obtiene y renderiza los productos de la categoria filtrados
  * @returns void
  */
-const getFilterProducts =  async () =>{
-  try{
+const getFilterProducts = async () => {
+  try {
     let dato = [];
     let categoria = getParam("id");
     let filter = getParam("filter");
-    let response = await fetch(`http://127.0.0.1:3000/api/categoria/${categoria}/filter/${filter}`, {
+    let response = await fetch(`${APIURL}categoria/${categoria}/filter/${filter}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -270,22 +271,22 @@ const getFilterProducts =  async () =>{
         'Content-Type': 'application/json',
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      for(let i of data["data"]){
-        dato.push(i);
-      }
-    })
-    .finally(() => {
-      setProductsByCategory(dato);
-      buyBtn(dato);
-      const idCat = document.querySelector("#id-cat");
-      idCat.value = getParam("id");
-      const spinner = document.querySelector("#spinner");
-      spinner.classList.add("d-none");
-    });
+      .then(response => response.json())
+      .then(data => {
+        for (let i of data["data"]) {
+          dato.push(i);
+        }
+      })
+      .finally(() => {
+        setProductsByCategory(dato);
+        buyBtn(dato);
+        const idCat = document.querySelector("#id-cat");
+        idCat.value = getParam("id");
+        const spinner = document.querySelector("#spinner");
+        spinner.classList.add("d-none");
+      });
 
-  } catch(error){
+  } catch (error) {
     console.log(error);
   }
 
@@ -298,11 +299,11 @@ const getFilterProducts =  async () =>{
  * @returns void
  */
 const filterSearch = async () => {
-  try{
+  try {
     let dato = [];
     let search = getParam("search");
     let filter = getParam("filter");
-    let response = await fetch(`http://127.0.0.1:3000/api/search/${search}/filter/${filter}`, {
+    let response = await fetch(`${APIURL}search/${search}/filter/${filter}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -312,24 +313,24 @@ const filterSearch = async () => {
       }
 
     })
-    .then(response => response.json())
-    .then(data =>{
-      console.log(data)
-      for (let i of data["data"]){
-        dato.push(i);
-      }
-    })
-    .finally(() => {
-      setProductsByCategory(dato);
-      buyBtn(dato);
-      const searchFilter = document.querySelector("#search-filter");
-      searchFilter.value = search;
-      const title = document.querySelector("#titulo-search");
-      title.textContent= `Resultados de la búsqueda para: "${search}"`;
-      const spinner = document.querySelector("#spinner");
-      spinner.classList.add("d-none");
-    })
-  } catch(error){
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        for (let i of data["data"]) {
+          dato.push(i);
+        }
+      })
+      .finally(() => {
+        setProductsByCategory(dato);
+        buyBtn(dato);
+        const searchFilter = document.querySelector("#search-filter");
+        searchFilter.value = search;
+        const title = document.querySelector("#titulo-search");
+        title.textContent = `Resultados de la búsqueda para: "${search}"`;
+        const spinner = document.querySelector("#spinner");
+        spinner.classList.add("d-none");
+      })
+  } catch (error) {
     console.log(error);
 
   }
@@ -357,7 +358,7 @@ const buyBtn = (data) => {
       localStorage.setItem('cart', JSON.stringify(cart));
       drawCart();
       updateTotal();
-    
+
     });
   });
 }
@@ -376,9 +377,9 @@ const drawCart = () => {
   }
 
   Object.values(cart).forEach(product => {
-    if(product.url_image == "" || product.url_image == null || product.url_image == "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg" ){
+    if (product.url_image == "" || product.url_image == null || product.url_image == "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg") {
       template.querySelector("img").setAttribute('src', "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg");
-    }else{
+    } else {
       template.querySelector("img").setAttribute('src', product.url_image);
     }
     template.querySelector("img").setAttribute('alt', product.name);
@@ -438,12 +439,12 @@ const calculateTotal = () => {
     total += product.price * product.cantidad;
     totalProducts += product.cantidad;
   });
-  containerTotalProducts.innerHTML="";
+  containerTotalProducts.innerHTML = "";
   const badgeCart = document.querySelector('.badge-cart');
   badgeCart.innerHTML = totalProducts;
   const template = document.querySelector("#total-products-template").content;
   const fragment = document.createDocumentFragment();
-  template.querySelector("#total-products").textContent = "Carrito | " +totalProducts+ " Productos";
+  template.querySelector("#total-products").textContent = "Carrito | " + totalProducts + " Productos";
   const copy = template.cloneNode(true);
   fragment.appendChild(copy);
   containerTotalProducts.appendChild(fragment);
@@ -460,12 +461,12 @@ const buttonsAddRemove = (data) => {
   buttonsAdd.forEach(button => {
     button.addEventListener('click', () => {
       Object.values(data).forEach(product => {
-        if(product.id == button.dataset.id){
+        if (product.id == button.dataset.id) {
           product.cantidad++;
         }
       })
-      
-      
+
+
       localStorage.setItem('cart', JSON.stringify(cart));
       updateTotal();
       drawCart();
@@ -475,9 +476,9 @@ const buttonsAddRemove = (data) => {
   buttonsRemove.forEach(button => {
     button.addEventListener('click', () => {
       Object.values(data).forEach(product => {
-        if(product.id == button.dataset.id){
+        if (product.id == button.dataset.id) {
           product.cantidad--;
-          if(product.cantidad == 0){
+          if (product.cantidad == 0) {
             delete cart[product.id];
           }
         }
