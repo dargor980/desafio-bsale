@@ -12,6 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.css" rel="stylesheet" />
     
     <link rel="stylesheet" href="css/style.css">
+    
     <title>Document</title>
 </head>
 <body>
@@ -66,7 +67,7 @@
           <span class="navbar-text me-3">
             <ul class="navbar-nav">
                 <li class="nav-item" onclick="openCart()">
-                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger badge-cart">5</span></a>
+                    <button class="btn btn-rounded"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger badge-cart">0</span></a>
                 </li>
             </ul>
           </span>
@@ -128,10 +129,12 @@
               </div>
               <div class="col-md-8">
                 <!-- Productos -->
-                <div class="container d-flex justify-content-end">
+                <div class="container d-flex justify-content-end">  
+                  <form action="" method="get">  
+                    <input type="text" class="d-none" id="id-cat" name="id">           
                   <div class="form-group">
                     <label for="" class="form-label">Ordenar por:</label>
-                    <select name="" id="" class="form-select">
+                    <select name="filter" id="" class="form-select">
                       <option value="1">Nombre (A-Z)</option>
                       <option value="2">Nombre (Z-A)</option>
                       <option value="3">Precio (menor a mayor)</option>
@@ -139,8 +142,9 @@
                       <option value="5">Descuento (menor a mayor)</option>
                       <option value="6">Descuento (mayor a menor)</option>
                     </select>
-                      <button class="btn btn-black btn-sm  my-3"> Ordenar</button>
-                  </div>
+                      <button class="btn btn-black btn-sm  my-3" type="submit"> Ordenar</button>
+                  </div> 
+                </form>
                 </div>
                 <div class="row" id="container-products">
                     
@@ -248,8 +252,8 @@
     <a class="text-white" href="#">Tienda Online</a>
   </div>
  
-
-  <script type="text/javascript" src="../app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="../app.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
 </body>
 </footer>

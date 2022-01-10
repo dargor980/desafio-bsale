@@ -9,48 +9,44 @@ const containerCart = document.querySelector("#container-cart");
 const containerTotalCart = document.querySelector("#total-cart");
 const containerTotalProducts = document.querySelector("#container-total-products");
 const containerCategoriasIndex = document.querySelector("#container-categorias");
-
-
-
-
-
+let category = "";
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  if(getPathName() == "/" || getPathName() == "/index.html"){
-    fetchCategories().then(()=>{
-      drawCategories();
-    }).finally(()=>{
-      const spinner = document.querySelector("#spinner");
-      spinner.classList.add("d-none");
+  fetchCategories().then(() => {
+    getCart();
+    drawCart();
+    calculateTotal();
+    updateTotal();
+    dropProduct(cart);
+    if(getPathName() == "/" || getPathName() == "/index.html"){
+        drawCategories();
+        const spinner = document.querySelector("#spinner");
+        spinner.classList.add("d-none");
+    }
+    if(getPathName() == "/src/categorias.html" ){ 
+      let nameCategory = listCategories.find(category => category.id == getParam("id"));
+      const tituloCategoria = document.querySelector("#titulo-categoria");
+      tituloCategoria.textContent = nameCategory.name;
+      if(getParam("filter")){
+        getFilterProducts().then(() => {
+          const idCat = document.querySelector("#id-cat");
+          idCat.value = getParam("id");
+          const spinner = document.querySelector("#spinner");
+          spinner.classList.add("d-none");
+        });
+      }else{
+  
+        fetchProductsByCategory();
+      }
+    }
+    if(getPathName() == "/src/search.html"){
+      searchProductsByName();
       
-    });
-    getCart();
-    drawCart();
-    calculateTotal();
-    updateTotal();
-    dropProduct(cart);
-    
-    
-  }
-  if(getPathName() == "/src/categorias.html" ){
-    fetchCategories();
-    fetchProductsByCategory();
-    getCart();
-    drawCart();
-    calculateTotal();
-    updateTotal();
-    dropProduct(cart);
-  }
-  if(getPathName() == "/src/search.html"){
-    fetchCategories();
-    getCart();
-    drawCart();
-    searchProductsByName();
-    calculateTotal();
-    updateTotal();
-  }
+    }
+  });
+
   
 
 
@@ -100,10 +96,11 @@ const fetchCategories = async () => {
 
 const fetchProductsByCategory = async () => {
   try {
-    let url = window.location.search;
-    let id = url.split("=")[1];
+    let categoryId = getParam("id");
+    const idForm = document.querySelector("#id-cat");
+    idForm.value = categoryId;
     let dato = [];
-    let response = await fetch(`http://127.0.0.1:3000/api/categoria/${id}`, {
+    let response = await fetch(`http://127.0.0.1:3000/api/categoria/${categoryId}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -171,6 +168,7 @@ const searchProductsByName = async () => {
 const setProductsByCategory = (data) => {
   const template = document.querySelector("#template-products").content;
   const fragment = document.createDocumentFragment();
+  
   data.forEach(product => {
     if (product.url_image == "" || product.url_image == null) {
       template.querySelector("img").setAttribute('src', "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg");
@@ -220,6 +218,47 @@ const drawCategories = () => {
 }
 
 
+const getFilterProducts =  async () =>{
+  try{
+    let dato = [];
+    let categoria = getParam("id");
+    let filter = getParam("filter");
+    let response = await fetch(`http://127.0.0.1:3000/api/categoria/${categoria}/filter/${filter}`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(let i of data["data"]){
+        dato.push(i);
+      }
+    })
+    .finally(() => {
+      setProductsByCategory(dato);
+    });
+
+  } catch(error){
+    console.log(error);
+  }
+
+}
+
+const filterSearch = async () => {
+  try{
+    let dato = [];
+    let search = getParam("search");
+    let filter = getParam("filter");
+    let response = await fetch(`https://127.0.0.1:3000/api/search`)
+  } catch(erro){
+    console.log(error);
+  }
+}
+
 
 
 
@@ -235,12 +274,10 @@ const buyBtn = (data) => {
         producto.cantidad += cart[producto.id].cantidad;
       }
       cart[producto.id] = { ...producto };
-
       localStorage.setItem('cart', JSON.stringify(cart));
-
       drawCart();
       updateTotal();
-
+    
     });
   });
 }

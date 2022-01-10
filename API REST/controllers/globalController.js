@@ -29,25 +29,6 @@ const getProductsByCat = async (req, res) => {
     }
 }
 
-const searchProducts = async (req, res) => {
-    let con = mysql.createConnection(dataConnection);
-    await con.connect(function (err) {
-        if (err) {
-            con.destroy();
-            res.status(505).json({
-                message: 'Internal Server Error'
-            });
-        }
-        con.query("SELECT * FROM product WHERE name LIKE  " + mysql.escape("%" + req.params.search + "%") + " AND category = " + mysql.escape(req.params.id) + " ORDER BY name DESC", function (err, result) {
-            if (err) throw err;
-            con.destroy();
-            res.status(200).json({
-                message: 'OK',
-                data: result
-            });
-        });
-    });
-}
 
 const searchProductsByName = async (req, res) => {
     let con = mysql.createConnection(dataConnection);
@@ -74,8 +55,52 @@ const searchProductsByName = async (req, res) => {
 }
 
 const filterProducts = async (req, res) => {
+    let filters = {
+        1 : { campo: "name", orden: "ASC" },
+        2 : { campo: "name", orden: "DESC" },
+        3 : { campo: "price", orden: "ASC"},
+        4 : { campo:"price", orden: "DESC"},
+        5 : { campo: "discount", orden: "ASC"},
+        6 : { campo: "discount", orden: "DESC"}
+    }
+    let category = req.params.id;
+    console.log(category);
+    let filter = req.params.filter;
+    let atribute = filters[filter].campo;
+    let order = filters[filter].orden;
+    console.log("ATRIBUTO: " + order);
+    let con = mysql.createConnection(dataConnection);
+    
+    await con.connect(function (err) {
+        if (err) {
+            res.status(505).json({
+                message: 'Internal Server Error'
+            });
+        }
+        con.query(`SELECT * FROM product where category = ${category} ORDER BY ${atribute} ${order}`, function (err, result) {
+            if (err) throw err;
+            console.log(JSON.stringify(result));
+            res.status(200).json({
+                message: 'OK',
+                data: result
+            });
+        });
+    });
+}
 
-    let filters = req.body;
+const filterSearch = async (req, res) => {
+    let filters = {
+        1 : { campo: "name", orden: "ASC" },
+        2 : { campo: "name", orden: "DESC" },
+        3 : { campo: "price", orden: "ASC"},
+        4 : { campo:"price", orden: "DESC"},
+        5 : { campo: "discount", orden: "ASC"},
+        6 : { campo: "discount", orden: "DESC"}
+    }
+    let search = req.params.search;
+    let filter = req.params.filter;
+    let atribute = filters[filter].campo;
+    let order = filters[filter].orden;
     let con = mysql.createConnection(dataConnection);
     await con.connect(function (err) {
         if (err) {
@@ -83,14 +108,19 @@ const filterProducts = async (req, res) => {
                 message: 'Internal Server Error'
             });
         }
-        con.query("", function (err, result) {
-            if (err) throw err;
+        con.query(``, function (err, result) {
+            if (err){
+                res.status(505).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            con.destroy();
             res.status(200).json({
                 message: 'OK',
                 data: result
             });
         });
-    });
+    })
 }
 
 const getCategories = async (req, res) => {
@@ -121,8 +151,8 @@ const getCategories = async (req, res) => {
 
 module.exports = {
     getProductsByCat,
-    searchProducts,
     filterProducts,
     getCategories,
-    searchProductsByName
+    searchProductsByName,
+    filterSearch
 }
