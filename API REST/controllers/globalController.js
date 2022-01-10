@@ -2,7 +2,7 @@ const { json } = require('express/lib/response');
 const mysql = require('mysql');
 const dataConnection = require('./db');
 
-const getProductsByCat = async (req, res) => {
+const getProductsByCat = async (req, res, next) => {
     try {
         let con = mysql.createConnection(dataConnection);
         await con.connect(function (err) {
@@ -69,11 +69,9 @@ const filterProducts = async (req, res) => {
             6 : { campo: "discount", orden: "DESC"}
         }
         let category = req.params.id;
-        console.log(category);
         let filter = req.params.filter;
         let atribute = filters[filter].campo;
         let order = filters[filter].orden;
-        console.log("ATRIBUTO: " + order);
         let con = mysql.createConnection(dataConnection);
         
         await con.connect(function (err) {
@@ -85,9 +83,7 @@ const filterProducts = async (req, res) => {
                     con.end();
                     throw err;
                 }
-                console.log("entre uwu ")
                 con.end();
-                console.log(JSON.stringify(result));
                 res.status(200).json({
                     message: 'OK',
                     data: result
@@ -122,7 +118,6 @@ const filterSearch = async (req, res) => {
             if (err) {
                 throw err;
             }
-            console.log("SELECT ", search, atribute, order);
             con.query(`SELECT * FROM product WHERE name LIKE '%${search}%' ORDER BY ${atribute} ${order}`, function (err, result) {
                 if (err){
                     con.destroy();
@@ -130,7 +125,6 @@ const filterSearch = async (req, res) => {
                         message: 'Internal Server Error'
                     });
                 }
-                console.log(result)
                 con.end();
                 res.status(200).json({
                     message: 'OK',

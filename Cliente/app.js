@@ -11,7 +11,9 @@ const containerTotalProducts = document.querySelector("#container-total-products
 const containerCategoriasIndex = document.querySelector("#container-categorias");
 let category = "";
 
-
+/**
+ * Inicialización.
+ */
 document.addEventListener("DOMContentLoaded", () => {
 
   fetchCategories().then(() => {
@@ -30,12 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const tituloCategoria = document.querySelector("#titulo-categoria");
       tituloCategoria.textContent = nameCategory.name;
       if(getParam("filter")){
-        getFilterProducts().then(() => {
-          const idCat = document.querySelector("#id-cat");
-          idCat.value = getParam("id");
-          const spinner = document.querySelector("#spinner");
-          spinner.classList.add("d-none");
-        });
+        getFilterProducts()
       }else{
   
         fetchProductsByCategory();
@@ -50,20 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
       
     }
   });
-
-  
-
-
-
-
 });
 
+/**
+ * Obtener valor del parametro de la url
+ * @param {*} param 
+ * @returns  string
+ */
 const getParam = (param) => {
   let url = new URL(window.location.href);
   let paramValue = url.searchParams.get(param);
   return paramValue;
 }
 
+
+/**
+ * Obtiene path de la url en el que se encuentra.
+ * @returns path de la url 
+ * 
+ */
 const getPathName = () => {
 
   return window.location.pathname;
@@ -71,7 +73,11 @@ const getPathName = () => {
 
 
 
-
+/**
+ * 
+ * Obtiene las categorias de los productos
+ * @returns void
+ */
 const fetchCategories = async () => {
   try {
     let response = await fetch("http://127.0.0.1:3000/api/categorias", {
@@ -98,6 +104,12 @@ const fetchCategories = async () => {
   }
 }
 
+
+/**
+ * 
+ * Obtiene los productos por categoria
+ * @returns void
+ */
 const fetchProductsByCategory = async () => {
   try {
     let categoryId = getParam("id");
@@ -110,7 +122,7 @@ const fetchProductsByCategory = async () => {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     })
     .then(response => response.json())
@@ -133,7 +145,11 @@ const fetchProductsByCategory = async () => {
 
 
 
-
+/**
+ * 
+ * Obtiene los productos por nombre
+ * @returns void
+ */
 const searchProductsByName = async () => {
   try {
     let search = getParam("search"); 
@@ -144,7 +160,7 @@ const searchProductsByName = async () => {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
 
     })
@@ -170,7 +186,11 @@ const searchProductsByName = async () => {
 }
 
 
-
+/**
+ * Renderiza los productos en la página 
+ * @param {*} data productos
+ * @returns void 
+ */
 const setProductsByCategory = (data) => {
   const template = document.querySelector("#template-products").content;
   const fragment = document.createDocumentFragment();
@@ -184,8 +204,9 @@ const setProductsByCategory = (data) => {
     }
     template.querySelector("#product-name").textContent = product.name;
     template.querySelector("#product-price").textContent = product.price;
-    if (product.discount > 0) {
+    if (product.discount != '0') {
       template.querySelector("#product-discount").textContent = "-" + product.discount + "%";
+      template.querySelector("#container-discount").classList.remove("d-none");
     } else {
       template.querySelector("#container-discount").classList.add("d-none");
     }
@@ -197,7 +218,11 @@ const setProductsByCategory = (data) => {
 }
 
 
-
+/**
+ * Renderiza las categorias en el navbar
+ * @param {array} data 
+ * @returns void
+ */
 const setCategories = (data) => {
   const templateCat = document.querySelector("#template-categories").content;
   const fragment = document.createDocumentFragment();
@@ -211,6 +236,10 @@ const setCategories = (data) => {
 
 }
 
+/**
+ * Renderiza las categorias en la página principal.
+ * @returns void
+ */
 const drawCategories = () => {
   const template = document.querySelector("#template-categorias").content;
   const fragment = document.createDocumentFragment();
@@ -223,7 +252,10 @@ const drawCategories = () => {
   containerCategoriasIndex.appendChild(fragment);
 }
 
-
+/**
+ * Obtiene y renderiza los productos de la categoria filtrados
+ * @returns void
+ */
 const getFilterProducts =  async () =>{
   try{
     let dato = [];
@@ -235,7 +267,7 @@ const getFilterProducts =  async () =>{
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     })
     .then(response => response.json())
@@ -246,6 +278,11 @@ const getFilterProducts =  async () =>{
     })
     .finally(() => {
       setProductsByCategory(dato);
+      buyBtn(dato);
+      const idCat = document.querySelector("#id-cat");
+      idCat.value = getParam("id");
+      const spinner = document.querySelector("#spinner");
+      spinner.classList.add("d-none");
     });
 
   } catch(error){
@@ -254,6 +291,12 @@ const getFilterProducts =  async () =>{
 
 }
 
+
+/**
+ * 
+ * Obtiene los productos de la busqueda filtrados
+ * @returns void
+ */
 const filterSearch = async () => {
   try{
     let dato = [];
@@ -265,7 +308,7 @@ const filterSearch = async () => {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
 
     })
@@ -278,8 +321,13 @@ const filterSearch = async () => {
     })
     .finally(() => {
       setProductsByCategory(dato);
+      buyBtn(dato);
       const searchFilter = document.querySelector("#search-filter");
       searchFilter.value = search;
+      const title = document.querySelector("#titulo-search");
+      title.textContent= `Resultados de la búsqueda para: "${search}"`;
+      const spinner = document.querySelector("#spinner");
+      spinner.classList.add("d-none");
     })
   } catch(error){
     console.log(error);
@@ -291,7 +339,11 @@ const filterSearch = async () => {
 
 
 
-
+/**
+ * Evento que añade producto al carrito
+ * @param {array} data 
+ * @returns void
+ */
 const buyBtn = (data) => {
   const buttons = document.querySelectorAll('.buy');
   buttons.forEach(button => {
@@ -310,7 +362,11 @@ const buyBtn = (data) => {
   });
 }
 
-
+/**
+ * Renderiza el carrito de compras
+ *
+ * @returns void
+ */
 const drawCart = () => {
   containerCart.innerHTML = "";
   const template = document.querySelector("#template-cart").content;
@@ -341,6 +397,12 @@ const drawCart = () => {
   buttonsAddRemove(cart);
 }
 
+/**
+ * 
+ * Agrega el evento de eliminar todos los productos de un tipo del carrito.
+ * @param {array} data 
+ * @returns void
+ */
 const dropProduct = (data) => {
   const buttons = document.querySelectorAll('.delete');
   buttons.forEach(button => {
@@ -353,14 +415,22 @@ const dropProduct = (data) => {
   });
 }
 
+/**
+ * Obtiene los productos del carrito
+ * @returns void
+ */
 const getCart = () => {
   if (localStorage.getItem('cart')) {
     cart = JSON.parse(localStorage.getItem('cart'));
   }
   drawCart();
-
 }
 
+/**
+ * 
+ * Calcula el total del carrito
+ * @returns void
+ */
 const calculateTotal = () => {
   total = 0;
   totalProducts = 0;
@@ -379,6 +449,11 @@ const calculateTotal = () => {
   containerTotalProducts.appendChild(fragment);
 }
 
+/**
+ * Agrega el evento de aumentar y disminuir la cantidad de productos en los botones
+ * @param {array} data 
+ * @returns void
+ */
 const buttonsAddRemove = (data) => {
   const buttonsAdd = document.querySelectorAll('.addbtn');
   const buttonsRemove = document.querySelectorAll('.removebtn');
@@ -414,6 +489,12 @@ const buttonsAddRemove = (data) => {
   });
 }
 
+
+
+/**
+ * Actualiza el total del carrito
+ * @returns void
+ */
 const updateTotal = () => {
   calculateTotal();
   containerTotalCart.innerHTML = "";
@@ -425,10 +506,19 @@ const updateTotal = () => {
   containerTotalCart.appendChild(fragment);
 }
 
+/**
+ * Abre el carrito de compras
+ * @returns void
+ */
 function openCart() {
   document.getElementById("sidebarCart").style.width = "600px";
   document.getElementById("main").style.marginRight = "250px";
 }
+
+/**
+ * Cierra el carrito de compras
+ * @returns void
+ */
 function closeCart() {
   document.getElementById("sidebarCart").style.width = "0";
   document.getElementById("main").style.marginRight = "250px";
